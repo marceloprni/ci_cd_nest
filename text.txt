@@ -1,0 +1,178 @@
+#PRIMEIRO 
+FROM node:18-slim
+
+WORKDIR /usr/src/app
+
+COPY package.json ./
+
+RUN yarn
+
+COPY . .
+
+RUN yarn run build
+
+EXPOSE 3000
+
+CMD ["yarn", "run", "start"]
+
+docker build -t api_rocket:vr0 .
+
+docker image ls api_rocket
+
+docker image history api_rocket 
+
+docker run --rm  -p 3001:3000 -d api_rocket:vr0
+
+--rm quando terminar ele remove sozinho 
+
+docker logs id do container
+
+######################################33
+
+GANHO DE PERFORMACE 
+
+FROM node:18-slim
+
+WORKDIR /usr/src/app
+
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn ./.yarn - se for criar varias pasta fazer a separação com varios copy.
+
+RUN yarn
+
+COPY . .
+
+RUN yarn run build
+
+EXPOSE 3000
+
+CMD ["yarn", "run", "start"]
+
+
+####################################
+
+REDE E VOLUMES
+
+docker network ls
+todo container tem uma rede - sera direto na bridge 
+
+criar rede propria para cada db
+
+docker network create primeira-network - cria a primeira rede
+
+por default ela vai ser o bridge a rede criada 
+
+docker network create --driver bridge primeira-network-bridge 
+
+será uma outra rede tambem bridge 
+
+
+####################################################
+
+REDE
+
+docker network ls
+
+isso para conectar o container a uma rede especifica criada 
+docket network connect "id da rede" "id do container"
+
+inspeciona a rede 
+docker network inspect "id da rede" ou nome
+
+em container fica os container conectado nessa rede
+
+inspecionar o container 
+docker container inspect "id do container" - um container pode esta inserido em varias rede 
+
+docker run --network=primeira_network -p 3001:3000 -d api_rocket:vr0
+
+########################################
+
+SALVAR ARQUIVO DE ASSESTS 
+
+docker exec -it "id do container" bash
+
+acha o diretorio dentro do container
+
+DOCKER VOLUMES
+
+docker volume inspect primeiro-volume - inspeciona o volume
+
+docker volume create - cria um volume
+
+docker run -v primeiro-volume:/usr/src/app --network=primeira_network -p 3001:3000 -d api_rocket:vr0
+
+Mounts - dentro do inspect fica o seu volume em source.
+
+docker exec -it "id do container" bash
+
+ls 
+ls src/
+touch src/file.logs
+ls src
+cat src/file.logs
+
+#######################################################
+
+ir no docker hub achar node
+
+node:20-alpine
+
+WORKDIR /usr/src/app
+
+COPY package.json ./
+
+RUN yarn
+
+COPY . .
+
+RUN yarn run build
+
+EXPOSE 3000
+
+CMD ["yarn", "run", "start"]
+
+docker build -t api_rocket:v4 .
+
+
+####################################################
+
+MULTIPLOS build
+
+FROM node:18 AS build
+
+# ELE CRIA UM DIRETORIO PARA RODAR O CODIGO
+WORKDIR /usr/src/app
+
+# 1. Copia os arquivos de configuração do Yarn e os arquivos de dependências
+# 2. Copia o restante do código da aplicação
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn ./.yarn
+
+COPY . .
+
+RUN yarn run build
+RUN yarn workspaces focus --production && yarn cache clean
+
+FROM node:18-alpine3.19
+
+WORKDIR /usr/src/app
+
+COPY --from=build /usr/src/app/package.json ./package.json
+COPY --from=build /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/node_modules ./node_modules
+
+EXPOSE 3000
+
+CMD ["yarn", "run", "start:prod"] 
+
+se estiver utilizando o alphine - docker exec -t "id do 
+
+#################################
+
+BANCO DE DADOS
+
+docker run -d --network=primeira_network -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=rocketseat-db -e MYSQL_USER=admin -e MYSQL_PASSWORD=root --name mysql mysql:8
+
+docker-compose logs
+
