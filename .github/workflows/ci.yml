@@ -10,15 +10,26 @@ jobs:
   build:
     name: 'Build and Push'
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [ 16, 18, 20 ]
 
     steps:
         - uses: actions/checkout@v6
-        - name: Setup node
+        - name: Setup node - ${{ matrix.node }}
           uses: actions/setup-node@v6
           with:
-            node-version: '20'
+            node-version: ${{ matrix.node }}
             cache: 'yarn'
         - name: Install dependencies
           run: yarn 
         - name: Run tests
           run: yarn run test
+        
+        - name: Generate tag
+          id: generate_tag
+          run: |
+            SHA=${echo $GITHUB_SHA | head -c7}
+            echo "SHA=$SHA" >> $GITHUB_ENV
+        - name: Build docker image
+          run: docker build -t rocketseat-ci-api:${{ steps.generate_tag.outputs.SHA }} .

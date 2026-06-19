@@ -176,3 +176,8 @@ docker run -d --network=primeira_network -p 3306:3306 -e MYSQL_ROOT_PASSWORD=roo
 
 docker-compose logs
 
+######################################
+CI / CD
+
+
+https://github.com/marketplace/actions/checkout
