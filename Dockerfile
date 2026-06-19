@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 # 1. Copia os arquivos de configuração do Yarn e os arquivos de dependências
 # 2. Copia o restante do código da aplicação
-COPY package.json yarn.lock .yarnrc.yml ./
+COPY package.json yarn.lock ./
 COPY .yarn ./.yarn
 
 COPY . .
