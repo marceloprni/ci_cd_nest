@@ -181,3 +181,40 @@ CI / CD
 
 
 https://github.com/marketplace/actions/checkout
+
+
+
+"IO".INPUT[18] := %I12.0;
+"IO".INPUT[19] := %I12.1;
+"IO".INPUT[20] := %I12.2;
+"IO".INPUT[21] := %I12.3;
+"IO".INPUT[22] := %I12.4;
+"IO".INPUT[23] := %I12.5;
+"IO".INPUT[24] := %I12.6;
+"IO".INPUT[8] :=  %I12.7;
+"IO".INPUT[9] :=  %I12.0;
+"IO".INPUT[7] :=  %I13.1;
+"IO".INPUT[8] :=  %I13.2;
+"IO".INPUT[9] :=  %I13.3;
+"IO".INPUT[7] :=  %I13.4;
+"IO".INPUT[8] :=  %I13.5;
+"IO".INPUT[9] :=  %I13.6;
+"IO".INPUT[9] :=  %I13.7;
+
+%Q4.0 := "IO".INPUT[18];
+%Q4.1 := "IO".INPUT[18];
+%Q4.2 := "IO".INPUT[18];
+%Q4.3 := "IO".INPUT[18];
+%Q4.4 := "IO".INPUT[18];
+%Q4.5 := "IO".INPUT[18];
+%Q4.6 := "IO".INPUT[18];
+%Q4.7 := "IO".INPUT[18];
+%Q5.0 := "IO".INPUT[18];
+%Q5.1 := "IO".INPUT[18];
+%Q5.2 := "IO".INPUT[18];
+%Q5.3 := "IO".INPUT[18];
+%Q5.4 := "IO".INPUT[18];
+%Q5.5 := "IO".INPUT[18];
+%Q5.6 := "IO".INPUT[18];
+%Q5.7 := "IO".INPUT[18];
+
